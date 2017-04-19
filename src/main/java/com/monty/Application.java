@@ -11,6 +11,9 @@ import java.util.Scanner;
  */
 public class Application {
     public static void main(String ... args) {
+        int wins = 0;
+        int losses = 0;
+
         while (true) {
             System.out.println("######## Monty Hall Simulator #########");
             Scanner scanner = new Scanner(System.in);
@@ -65,9 +68,13 @@ public class Application {
 
             if (game.secondPick(secondChoice)) {
                 System.out.println("You have won!");
+                wins++;
             } else {
             System.out.println("You have lost!");
+            losses++;
             }
+            System.out.println("Wins: " + wins);
+            System.out.println("Losses: " + losses);
         }
     }
 
