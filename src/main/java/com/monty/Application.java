@@ -13,12 +13,29 @@ public class Application {
     public static void main(String ... args) {
         int wins = 0;
         int losses = 0;
+        Scanner scanner = new Scanner(System.in);
+        List<Integer> boxes = Arrays.asList(1, 2, 3);
+
+        System.out.println("######## Monty Hall Simulator #########");
+
+        System.out.print("1) Interactive , 2) Batch Run: ");
+
+        int runChoice = scanner.nextInt();
+
+        if(runChoice != 1 && runChoice != 2) {
+            System.out.println("Choice not known");
+            return;
+        }
+
+        if(runChoice == 2) {
+            System.out.print("1)Switch in second run 2)Stay on second run: ");
+            int stayOrSwitch = scanner.nextInt();
+            if(1 > stayOrSwitch || stayOrSwitch > 2) {
+
+            }
+        }
 
         while (true) {
-            System.out.println("######## Monty Hall Simulator #########");
-            Scanner scanner = new Scanner(System.in);
-
-            List<Integer> boxes = Arrays.asList(1, 2, 3);
 
             List<Integer> remainingBoxes = new ArrayList<>(boxes);
 

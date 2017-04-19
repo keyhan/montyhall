@@ -17,7 +17,7 @@ public class MontyHallTest {
         int wins = 0;
         int losses = 0;
 
-        for (int i  = 0; i < 100;  i++) {
+        for (int i  = 0; i < 50000;  i++) {
             MontyHallGame game = new MontyHallGame();
             Integer chosenBox = new Random().nextInt(3) + 1;
             Integer openedBox = game.firstPick(chosenBox);
