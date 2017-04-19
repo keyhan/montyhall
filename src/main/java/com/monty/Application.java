@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -32,8 +33,9 @@ public class Application {
 
             for (int i = 0; i < batchSize; i++) {
                 MontyHallGame game = new MontyHallGame();
+                Map<Integer, String> boxMap = MontyHallGame.initGame();
                 Integer firstChoice = new Random().nextInt(3) + 1;
-                Integer openedBox = game.chooseOpenBoxFromFirstPick(firstChoice);
+                Integer openedBox = game.chooseOpenBoxFromFirstPick(boxMap, firstChoice);
                 int secondChoice;
                 if(switchOrKeep == SWITCH) {
                     List<Integer> boxNumbers = new ArrayList<>(BOX_NUMBERS);
@@ -43,7 +45,7 @@ public class Application {
                 } else {
                     secondChoice = firstChoice;
                 }
-                if (game.secondPick(secondChoice)) {
+                if (game.isSecondPickWinner(boxMap, secondChoice)) {
                     wins++;
                 } else {
                     losses++;
@@ -83,7 +85,9 @@ public class Application {
 
             MontyHallGame game = new MontyHallGame();
 
-            Integer openedBox = game.chooseOpenBoxFromFirstPick(firstChoice);
+            Map<Integer, String> boxMap = MontyHallGame.initGame();
+
+            Integer openedBox = game.chooseOpenBoxFromFirstPick(boxMap, firstChoice);
 
             remainingBoxes.remove(openedBox);
 
@@ -105,7 +109,7 @@ public class Application {
                 }
             }
 
-            if (game.secondPick(secondChoice)) {
+            if (game.isSecondPickWinner(boxMap, secondChoice)) {
                 System.out.println("You have won!");
                 wins++;
             } else {
