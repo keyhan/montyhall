@@ -9,45 +9,39 @@ import java.util.Random;
  */
 public class MontyHallGame {
 
-    private Map<Integer, Box> boxMap = new HashMap<>();
+    private Map<Integer, String> boxMap = new HashMap<>();
 
     public MontyHallGame() {
-        boxMap.put(1,new Box());
-        boxMap.put(2,new Box());
-        boxMap.put(3,new Box());
-        getRandomBoxFromArray(boxMap).setEmpty(false);
-    }
-
-    private Box getRandomBoxFromArray(Map<Integer, Box> boxes) {
+        boxMap.put(1,null);
+        boxMap.put(2,null);
+        boxMap.put(3,null);
         Random generator = new Random();
-        int randomKey = generator.nextInt(boxes.values().size()) + 1;
-        return boxes.get(randomKey);
+        int randomKey = generator.nextInt(3) + 1;
+        boxMap.put(randomKey, "HELLO");
     }
 
-    public Integer firstPick(Integer chosenBox) throws RuntimeException{
-
-        //List<Box> restOfBoxes = new ArrayList<>(boxMap.values());
-        Map<Integer, Box> restOfBoxes = new HashMap<>();
+    public int chooseOpenBoxFromFirstPick(int firstChoice) throws RuntimeException{
+        Map<Integer, String> restOfBoxes = new HashMap<>();
         restOfBoxes.putAll(boxMap);
-        restOfBoxes.remove(chosenBox);
+        restOfBoxes.remove(firstChoice);
 
         int nonEmpty = -1;
 
-        for(Map.Entry<Integer, Box> entry: restOfBoxes.entrySet()) {
-            if(!entry.getValue().isEmpty()) {
+        for(Map.Entry<Integer, String> entry: restOfBoxes.entrySet()) {
+            if(entry.getValue() != null) {
                 nonEmpty = entry.getKey();
                 break;
             }
         }
 
         //both are empty, randomize one
-        if(nonEmpty!= -1) {
-            return (Integer) restOfBoxes.keySet().toArray()[new Random().nextInt(restOfBoxes.keySet().size())];
+        if(nonEmpty == -1) {
+            return (int) restOfBoxes.keySet().toArray()[new Random().nextInt(restOfBoxes.keySet().size())];
 
         }
 
         //one is empty, return its key
-        for(Integer key : restOfBoxes.keySet()) {
+        for(int key : restOfBoxes.keySet()) {
             if(key != nonEmpty) {
                 return key;
             }
@@ -57,7 +51,7 @@ public class MontyHallGame {
         throw new RuntimeException("Only one box can be full");
     }
 
-    public boolean secondPick(Integer chosenBox) {
-        return boxMap.get(chosenBox).isEmpty();
+    public boolean secondPick(int chosenBox) {
+        return boxMap.get(chosenBox) != null;
     }
 }

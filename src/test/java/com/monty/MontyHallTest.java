@@ -20,7 +20,7 @@ public class MontyHallTest {
         for (int i  = 0; i < 50000;  i++) {
             MontyHallGame game = new MontyHallGame();
             Integer chosenBox = new Random().nextInt(3) + 1;
-            Integer openedBox = game.firstPick(chosenBox);
+            Integer openedBox = game.chooseOpenBoxFromFirstPick(chosenBox);
             if(game.secondPick(getLastBoxNumber(game,chosenBox, openedBox))) {
                 wins++;
             } else {
@@ -37,5 +37,12 @@ public class MontyHallTest {
         boxNumbers.remove(chosenBox);
         boxNumbers.remove(openedBox);
         return boxNumbers.get(0);
+    }
+
+    @Test
+    public void testChosenBoxFromFirstPick() {
+        MontyHallGame game = new MontyHallGame();
+        int openBox = game.chooseOpenBoxFromFirstPick(1);
+        System.out.println("openBox = " + openBox);
     }
 }
