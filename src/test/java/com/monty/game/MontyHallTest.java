@@ -1,5 +1,6 @@
-package com.monty;
+package com.monty.game;
 
+import com.monty.game.MontyHallGame;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.fail;
 
@@ -22,13 +22,6 @@ public class MontyHallTest {
         boxNumbers.remove(chosenBox);
         boxNumbers.remove(openedBox);
         return boxNumbers.get(0);
-    }
-
-    @Test
-    public void testInitGame() {
-        Map<Integer, String> boxMap = MontyHallGame.initGame();
-        Assert.assertEquals(3, boxMap.size());
-        Assert.assertEquals(1, boxMap.values().stream().filter(box -> box != null).collect(Collectors.toList()).size());
     }
 
     @Test

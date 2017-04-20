@@ -1,4 +1,4 @@
-package com.monty;
+package com.monty.game;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,18 +9,7 @@ import java.util.stream.Collectors;
 /**
  * Created by keyhan on 2017-04-18.
  */
-public class MontyHallGame {
-
-    public static Map<Integer, String> initGame() {
-        Map<Integer, String> boxMap = new HashMap<>();
-        boxMap.put(1,null);
-        boxMap.put(2,null);
-        boxMap.put(3,null);
-        Random generator = new Random();
-        int randomKey = generator.nextInt(3) + 1;
-        boxMap.put(randomKey, "HELLO");
-        return boxMap;
-    }
+ class MontyHallGame {
 
     public int chooseOpenBoxFromFirstPick(Map<Integer, String> boxMap, int firstChoice){
 
