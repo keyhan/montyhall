@@ -1,14 +1,9 @@
 package com.monty.game;
 
-import com.monty.game.MontyHallGame;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.fail;
 
@@ -17,27 +12,18 @@ import static org.junit.Assert.fail;
  */
 public class MontyHallTest {
 
-    private Integer getLastBoxNumber(MontyHallGame game, Integer chosenBox, Integer openedBox) {
-        List<Integer> boxNumbers = new ArrayList<>(Arrays.asList(1,2,3));
-        boxNumbers.remove(chosenBox);
-        boxNumbers.remove(openedBox);
-        return boxNumbers.get(0);
-    }
-
     @Test
     public void testOpenBoxFromOneNonEmpty() {
         int[] boxArray= new int[]{0,0,1};
-        MontyHallGame game = new MontyHallGame();
-        int openBox = game.chooseOpenBoxFromFirstPick(boxArray,1);
+        int openBox = MontyHallGame.chooseOpenBoxFromFirstPick(boxArray,1);
         Assert.assertEquals(2, openBox);
     }
 
     @Test
     public void testOpenBoxFromTwoEmpty() {
         int[] boxArray= new int[]{0,1,1};
-        MontyHallGame game = new MontyHallGame();
         try {
-            game.chooseOpenBoxFromFirstPick(boxArray, 3);
+            MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, 3);
             fail();
         } catch (RuntimeException e) {
             //PASS
@@ -47,9 +33,8 @@ public class MontyHallTest {
     @Test
     public void testOpenBoxFromAllEmpty() {
         int[] boxArray= new int[]{0,0,0};
-        MontyHallGame game = new MontyHallGame();
         try {
-            game.chooseOpenBoxFromFirstPick(boxArray, 3);
+            MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, 3);
             fail();
         } catch (RuntimeException e) {
             //PASS
@@ -59,9 +44,8 @@ public class MontyHallTest {
     @Test
     public void testOpenBoxFromTooBigMap() {
         int[] boxArray= new int[]{0,0,0,1};
-        MontyHallGame game = new MontyHallGame();
         try {
-            game.chooseOpenBoxFromFirstPick(boxArray, 3);
+            MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, 3);
             fail();
         } catch (RuntimeException e) {
             //PASS

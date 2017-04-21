@@ -9,7 +9,7 @@ import java.util.Random;
  */
  class MontyHallGame {
 
-    int chooseOpenBoxFromFirstPick(int[] boxArray, int firstChoice){
+    static int chooseOpenBoxFromFirstPick(int[] boxArray, int firstChoice){
 
         validateBoxArray(boxArray);
 
@@ -41,7 +41,7 @@ import java.util.Random;
         throw new RuntimeException("Should not reach here");
     }
 
-    private int getNumberOfFullBoxes(int[] restOfBoxes) {
+    static private int getNumberOfFullBoxes(int[] restOfBoxes) {
         int nFullBoxes = 0;
         for (int restOfBoxe : restOfBoxes) {
             if (restOfBoxe == 1) {
@@ -51,7 +51,7 @@ import java.util.Random;
         return nFullBoxes;
     }
 
-    private void validateBoxArray(int[] boxArray) {
+    static private void validateBoxArray(int[] boxArray) {
         if(boxArray.length != 3) {
             throw new RuntimeException("Only 3 boxes allowed");
         }
@@ -63,7 +63,7 @@ import java.util.Random;
         }
     }
 
-    boolean isSecondPickWinner(int[] boxArray, int secondChoice) {
+    static boolean isSecondPickWinner(int[] boxArray, int secondChoice) {
         return boxArray[secondChoice-1] == 1;
     }
 }

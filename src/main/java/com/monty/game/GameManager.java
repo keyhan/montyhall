@@ -29,15 +29,13 @@ public class GameManager {
 
     }
 
-    private MontyHallGame game = new MontyHallGame();
-
     public int[] batchPlay(int batchSize, int switchOrKeep){
         int wins = 0;
         int losses = 0;
         for (int i = 0; i < batchSize; i++) {
             init();
             Integer firstChoice = new Random().nextInt(3) + 1;
-            Integer openedBox = game.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
+            Integer openedBox = MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
             int secondChoice;
             if(switchOrKeep == SWITCH) {
                 secondChoice = Arrays.stream(BOX_NUMBERS)
@@ -45,7 +43,7 @@ public class GameManager {
             } else {
                 secondChoice = firstChoice;
             }
-            if (game.isSecondPickWinner(boxArray, secondChoice)) {
+            if (MontyHallGame.isSecondPickWinner(boxArray, secondChoice)) {
                 wins++;
             } else {
                 losses++;
@@ -57,13 +55,13 @@ public class GameManager {
     public int getOpenedBox(int firstChoice) {
         init();
         firstChoiceMade = true;
-        return game.chooseOpenBoxFromFirstPick(boxArray,firstChoice);
+        return MontyHallGame.chooseOpenBoxFromFirstPick(boxArray,firstChoice);
     }
 
     public boolean isSecondChoiceWinner(int secondChoice) {
         if(!firstChoiceMade) {
             throw new RuntimeException("No cheating, make first choice");
         }
-        return game.isSecondPickWinner(boxArray,secondChoice);
+        return MontyHallGame.isSecondPickWinner(boxArray,secondChoice);
     }
 }
