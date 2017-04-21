@@ -1,8 +1,6 @@
 package com.monty.game;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,7 +12,7 @@ public class GameManager {
 
     private final static int SWITCH = 1;
 
-    private final static List<Integer> BOX_NUMBERS = Arrays.asList(1, 2, 3);
+    private final static int[] BOX_NUMBERS = new int[]{1, 2, 3};
 
     private boolean firstChoiceMade = false;
 
@@ -42,10 +40,8 @@ public class GameManager {
             Integer openedBox = game.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
             int secondChoice;
             if(switchOrKeep == SWITCH) {
-                List<Integer> boxNumbers = new ArrayList<>(BOX_NUMBERS);
-                boxNumbers.remove(firstChoice);
-                boxNumbers.remove(openedBox);
-                secondChoice = boxNumbers.get(0);
+                secondChoice = Arrays.stream(BOX_NUMBERS)
+                        .filter(number -> number != firstChoice && number != openedBox).toArray()[0];
             } else {
                 secondChoice = firstChoice;
             }
