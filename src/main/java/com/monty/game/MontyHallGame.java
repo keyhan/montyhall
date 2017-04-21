@@ -9,6 +9,8 @@ import java.util.Random;
  */
  class MontyHallGame {
 
+    final static Random GENERATOR = new Random();
+
     static int chooseOpenBoxFromFirstPick(int[] boxArray, int firstChoice){
 
         validateBoxArray(boxArray);
@@ -26,7 +28,7 @@ import java.util.Random;
                     positions.add(i+1);
                 }
             }
-            return positions.get(new Random().nextInt(positions.size()));
+            return positions.get(GENERATOR.nextInt(positions.size()));
         }
 
 

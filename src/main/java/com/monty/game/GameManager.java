@@ -16,17 +16,11 @@ public class GameManager {
 
     private boolean firstChoiceMade = false;
 
-
-
     private void init() {
         boxArray[0] = 0;
         boxArray[1] = 0;
         boxArray[2] = 0;
-
-        Random generator = new Random();
-        int randomKey = generator.nextInt(3);
-        boxArray[randomKey] = 1;
-
+        boxArray[MontyHallGame.GENERATOR.nextInt(3)] = 1;
     }
 
     public int[] batchPlay(int batchSize, int switchOrKeep){
