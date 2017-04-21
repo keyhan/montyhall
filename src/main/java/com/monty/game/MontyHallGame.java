@@ -1,59 +1,71 @@
 package com.monty.game;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * Created by keyhan on 2017-04-18.
  */
  class MontyHallGame {
 
-    public int chooseOpenBoxFromFirstPick(Map<Integer, String> boxMap, int firstChoice){
+    int chooseOpenBoxFromFirstPick(int[] boxArray, int firstChoice){
 
-        validateBoxMap(boxMap);
+        validateBoxArray(boxArray);
 
-        Map<Integer, String> restOfBoxes = new HashMap<>();
-        restOfBoxes.putAll(boxMap);
-        restOfBoxes.remove(firstChoice);
+        int[] restOfBoxes = Arrays.copyOf(boxArray, boxArray.length);
+        restOfBoxes[firstChoice-1]= -1;
 
-        List<Integer> nonEmptyBoxes = restOfBoxes.entrySet().stream().filter(entry -> entry.getValue() != null)
-                .map(entry -> entry.getKey())
-                .collect(Collectors.toList());
+        int nFullBoxesInRest = getNumberOfFullBoxes(restOfBoxes);
 
-        //both are empty, randomize one
-        if(nonEmptyBoxes.size() == 0) {
-            return (int) restOfBoxes.keySet().toArray()[new Random().nextInt(restOfBoxes.keySet().size())];
-
+        //both of the rest are empty, randomize one
+        List<Integer> positions = new ArrayList<>();
+        if(nFullBoxesInRest == 0) {
+            for(int i = 0; i < restOfBoxes.length; i++) {
+                if(restOfBoxes[i] == 0) {
+                    positions.add(i+1);
+                }
+            }
+            return positions.get(new Random().nextInt(positions.size()));
         }
 
-        //one is empty, return its key
-        List<Integer> emptyBoxes = restOfBoxes.keySet().stream().filter(key ->
-                key != nonEmptyBoxes.get(0)).collect(Collectors.toList());
 
-        if(emptyBoxes == null && emptyBoxes.size() != 1) {
-            throw new RuntimeException("There should be exactly 2 empty boxes in this game");
+
+        //one is empty, return its position
+        for(int i = 0; i < restOfBoxes.length; i++) {
+            if(restOfBoxes[i] == 0) {
+                return i+1;
+            }
         }
-        return emptyBoxes.get(0);
+
+        throw new RuntimeException("Should not reach here");
     }
 
-    private void validateBoxMap(Map<Integer, String> boxMap) {
-        if(boxMap.size() != 3) {
+    private int getNumberOfFullBoxes(int[] restOfBoxes) {
+        int nFullBoxes = 0;
+        for (int restOfBoxe : restOfBoxes) {
+            if (restOfBoxe == 1) {
+                nFullBoxes++;
+            }
+        }
+        return nFullBoxes;
+    }
+
+    private void validateBoxArray(int[] boxArray) {
+        if(boxArray.length != 3) {
             throw new RuntimeException("Only 3 boxes allowed");
         }
 
-        List<Integer> nonEmptyInputBoxes = boxMap.entrySet().stream().filter(entry -> entry.getValue() != null)
-                .map(entry -> entry.getKey())
-                .collect(Collectors.toList());
+        int nFullBoxes = getNumberOfFullBoxes(boxArray);
 
-        if(nonEmptyInputBoxes.size() != 1) {
+        if(nFullBoxes != 1) {
             throw new RuntimeException("Exactly one box can be full");
         }
     }
 
-    public boolean isSecondPickWinner(Map<Integer, String> boxMap, int secondChoice) {
-        return boxMap.get(secondChoice) != null;
+    boolean isSecondPickWinner(int[] boxArray, int secondChoice) {
+        return boxArray[secondChoice-1] == 1;
     }
 }

@@ -26,24 +26,18 @@ public class MontyHallTest {
 
     @Test
     public void testOpenBoxFromOneNonEmpty() {
-        Map<Integer, String> boxMap= new HashMap<>();
-        boxMap.put(1,null);
-        boxMap.put(2,null);
-        boxMap.put(3,"Hello");
+        int[] boxArray= new int[]{0,0,1};
         MontyHallGame game = new MontyHallGame();
-        int openBox = game.chooseOpenBoxFromFirstPick(boxMap,1);
+        int openBox = game.chooseOpenBoxFromFirstPick(boxArray,1);
         Assert.assertEquals(2, openBox);
     }
 
     @Test
     public void testOpenBoxFromTwoEmpty() {
-        Map<Integer, String> boxMap= new HashMap<>();
-        boxMap.put(1,null);
-        boxMap.put(2,"Hello");
-        boxMap.put(3,"Hello");
+        int[] boxArray= new int[]{0,1,1};
         MontyHallGame game = new MontyHallGame();
         try {
-            game.chooseOpenBoxFromFirstPick(boxMap, 3);
+            game.chooseOpenBoxFromFirstPick(boxArray, 3);
             fail();
         } catch (RuntimeException e) {
             //PASS
@@ -52,13 +46,10 @@ public class MontyHallTest {
 
     @Test
     public void testOpenBoxFromAllEmpty() {
-        Map<Integer, String> boxMap= new HashMap<>();
-        boxMap.put(1,null);
-        boxMap.put(2,null);
-        boxMap.put(3,null);
+        int[] boxArray= new int[]{0,0,0};
         MontyHallGame game = new MontyHallGame();
         try {
-            game.chooseOpenBoxFromFirstPick(boxMap, 3);
+            game.chooseOpenBoxFromFirstPick(boxArray, 3);
             fail();
         } catch (RuntimeException e) {
             //PASS
@@ -67,19 +58,43 @@ public class MontyHallTest {
 
     @Test
     public void testOpenBoxFromTooBigMap() {
-        Map<Integer, String> boxMap= new HashMap<>();
-        boxMap.put(1,null);
-        boxMap.put(2,null);
-        boxMap.put(3,null);
-        boxMap.put(4,null);
+        int[] boxArray= new int[]{0,0,0,1};
         MontyHallGame game = new MontyHallGame();
         try {
-            game.chooseOpenBoxFromFirstPick(boxMap, 3);
+            game.chooseOpenBoxFromFirstPick(boxArray, 3);
             fail();
         } catch (RuntimeException e) {
             //PASS
         }
     }
+
+    @Test
+    public void testGoToSecondStepDirectlyNotAllowed() {
+        GameManager gameManager = new GameManager();
+        try {
+            gameManager.isSecondChoiceWinner(1);
+            fail();
+        } catch (RuntimeException e) {
+            //PASS
+        }
+    }
+
+    @Test
+    public void testBatchPlay() {
+        GameManager gameManager = new GameManager();
+        int[] ints = gameManager.batchPlay(100, 1);
+        System.out.println("ints = " + Arrays.toString(ints));
+        Assert.assertEquals(100, Arrays.stream(ints).sum());
+    }
+
+    @Test
+    public void testGetOpenedBox() {
+        GameManager gameManager = new GameManager();
+        int b = gameManager.getOpenedBox(1);
+        Assert.assertNotEquals(1,b);
+    }
+
+
 
 
 

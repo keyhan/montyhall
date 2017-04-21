@@ -2,9 +2,7 @@ package com.monty.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -12,7 +10,7 @@ import java.util.Random;
  */
 public class GameManager {
 
-    Map<Integer, String> boxMap = new HashMap<>();
+    private static int[] boxArray = new int[3];
 
     private final static int SWITCH = 1;
 
@@ -22,13 +20,14 @@ public class GameManager {
 
 
 
-    public GameManager() {
-        boxMap.put(1,null);
-        boxMap.put(2,null);
-        boxMap.put(3,null);
+    private void init() {
+        boxArray[0] = 0;
+        boxArray[1] = 0;
+        boxArray[2] = 0;
+
         Random generator = new Random();
-        int randomKey = generator.nextInt(3) + 1;
-        boxMap.put(randomKey, "HELLO");
+        int randomKey = generator.nextInt(3);
+        boxArray[randomKey] = 1;
 
     }
 
@@ -38,8 +37,9 @@ public class GameManager {
         int wins = 0;
         int losses = 0;
         for (int i = 0; i < batchSize; i++) {
+            init();
             Integer firstChoice = new Random().nextInt(3) + 1;
-            Integer openedBox = game.chooseOpenBoxFromFirstPick(boxMap, firstChoice);
+            Integer openedBox = game.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
             int secondChoice;
             if(switchOrKeep == SWITCH) {
                 List<Integer> boxNumbers = new ArrayList<>(BOX_NUMBERS);
@@ -49,7 +49,7 @@ public class GameManager {
             } else {
                 secondChoice = firstChoice;
             }
-            if (game.isSecondPickWinner(boxMap, secondChoice)) {
+            if (game.isSecondPickWinner(boxArray, secondChoice)) {
                 wins++;
             } else {
                 losses++;
@@ -59,14 +59,15 @@ public class GameManager {
     }
 
     public int getOpenedBox(int firstChoice) {
+        init();
         firstChoiceMade = true;
-        return game.chooseOpenBoxFromFirstPick(boxMap,firstChoice);
+        return game.chooseOpenBoxFromFirstPick(boxArray,firstChoice);
     }
 
     public boolean isSecondChoiceWinner(int secondChoice) {
         if(!firstChoiceMade) {
             throw new RuntimeException("No cheating, make first choice");
         }
-        return game.isSecondPickWinner(boxMap,secondChoice);
+        return game.isSecondPickWinner(boxArray,secondChoice);
     }
 }
