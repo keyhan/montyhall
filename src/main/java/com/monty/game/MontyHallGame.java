@@ -60,7 +60,7 @@ import java.util.Random;
     }
 
     static private void validateBoxArray(int[] boxArray) {
-        if(boxArray.length != 3) {
+        if(boxArray == null || boxArray.length != 3) {
             throw new RuntimeException("Only 3 boxes allowed");
         }
 
