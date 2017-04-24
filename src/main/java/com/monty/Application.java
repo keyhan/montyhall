@@ -19,7 +19,6 @@ public class Application {
 
     private static GameManager gameManager;
 
-
     private static void playBatch() {
         while (true) {
             System.out.print("1) Switch box in second run 2) Keep box in second run: ");
@@ -30,7 +29,7 @@ public class Application {
             System.out.print("Batch Size: ");
             int batchSize = SCANNER.nextInt();
 
-            int[] results = gameManager.batchPlay(batchSize,switchOrKeep);
+            int[] results = gameManager.batchPlay(batchSize,switchOrKeep==1);
 
             System.out.println("Wins: " + results[0]);
             System.out.println("Losses: " + results[1]);

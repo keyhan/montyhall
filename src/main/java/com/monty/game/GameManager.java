@@ -10,8 +10,6 @@ public class GameManager {
 
     private static int[] boxArray = new int[3];
 
-    private final static int SWITCH = 1;
-
     private final static int[] BOX_NUMBERS = new int[]{1, 2, 3};
 
     private boolean firstChoiceMade = false;
@@ -23,7 +21,7 @@ public class GameManager {
         boxArray[MontyHallGame.GENERATOR.nextInt(3)] = 1;
     }
 
-    public int[] batchPlay(int batchSize, int switchOrKeep){
+    public int[] batchPlay(int batchSize, boolean doSwitch){
         int wins = 0;
         int losses = 0;
         for (int i = 0; i < batchSize; i++) {
@@ -31,10 +29,10 @@ public class GameManager {
             int firstChoice = new Random().nextInt(3) + 1;
             int openedBox = MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
             int secondChoice;
-            if(switchOrKeep == SWITCH) {
+            if(doSwitch) {
                 secondChoice = Arrays.stream(BOX_NUMBERS)
                         .filter(number -> number != firstChoice && number != openedBox).toArray()[0];
-            } else {
+            } else { //KEEP
                 secondChoice = firstChoice;
             }
             if (MontyHallGame.isSecondPickWinner(boxArray, secondChoice)) {

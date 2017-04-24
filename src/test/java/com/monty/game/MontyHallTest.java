@@ -66,7 +66,7 @@ public class MontyHallTest {
     @Test
     public void testBatchPlay() {
         GameManager gameManager = new GameManager();
-        int[] ints = gameManager.batchPlay(100, 1);
+        int[] ints = gameManager.batchPlay(100, true);
         System.out.println("ints = " + Arrays.toString(ints));
         Assert.assertEquals(100, Arrays.stream(ints).sum());
     }
@@ -77,9 +77,5 @@ public class MontyHallTest {
         int b = gameManager.getOpenedBox(1);
         Assert.assertNotEquals(1,b);
     }
-
-
-
-
 
 }
