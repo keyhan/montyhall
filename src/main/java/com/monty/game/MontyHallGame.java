@@ -12,9 +12,10 @@ import java.util.Random;
 
     final static Random GENERATOR = new Random();
 
-    static int chooseOpenBoxFromFirstPick(int[] boxArray, int firstChoice){
+    static int chooseOpenBoxFromFirstPick(final int[] boxArray, int firstChoice){
 
         validateBoxArray(boxArray);
+        int openedBox;
 
         //Sets the first chosen to -1
         int [] copyArray = Arrays.copyOf(boxArray, boxArray.length);
@@ -23,36 +24,39 @@ import java.util.Random;
         int nFullBoxesInRest = getNumberOfFullBoxes(copyArray);
 
         //both of the rest are empty, randomize one
-        List<Integer> positions = new ArrayList<>();
         if(nFullBoxesInRest == 0) {
-            for(int i = 0; i < copyArray.length; i++) {
-                if(copyArray[i] == 0) {
-                    positions.add(i+1);
-                }
-            }
-            return positions.get(GENERATOR.nextInt(positions.size()));
+            openedBox = chooseOpenedBoxFromTwoEmptyRemaining(copyArray);
         }
-
-
-
         //one is empty, return its position
+        else {
+            openedBox = chooseOpenedBoxFromOneEmptyRemaining(copyArray);
+        } if (openedBox == -1) {
+            throw new RuntimeException("Should not be reached");
+        }
+        return openedBox;
+    }
+
+    private static int chooseOpenedBoxFromOneEmptyRemaining(int[] boxArray) {
         for(int i = 0; i < boxArray.length; i++) {
             if(boxArray[i] == 0) {
                 return i+1;
             }
         }
-
-        throw new RuntimeException("Should not reach here");
+        return -1;
     }
 
-    static private int getNumberOfFullBoxes(int[] restOfBoxes) {
-        int nFullBoxes = 0;
-        for (int restOfBoxe : restOfBoxes) {
-            if (restOfBoxe == 1) {
-                nFullBoxes++;
+    private static int chooseOpenedBoxFromTwoEmptyRemaining(int[] array) {
+        List<Integer> positions = new ArrayList<>();
+        for(int i = 0; i < array.length; i++) {
+            if(array[i] == 0) {
+                positions.add(i+1);
             }
         }
-        return nFullBoxes;
+        return positions.get(GENERATOR.nextInt(positions.size()));
+    }
+
+    static private int getNumberOfFullBoxes(int[] array) {
+        return Arrays.stream(array).filter(item -> item == 1).sum();
     }
 
     static private void validateBoxArray(int[] boxArray) {
