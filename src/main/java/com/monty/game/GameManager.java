@@ -28,8 +28,8 @@ public class GameManager {
         int losses = 0;
         for (int i = 0; i < batchSize; i++) {
             init();
-            Integer firstChoice = new Random().nextInt(3) + 1;
-            Integer openedBox = MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
+            int firstChoice = new Random().nextInt(3) + 1;
+            int openedBox = MontyHallGame.chooseOpenBoxFromFirstPick(boxArray, firstChoice);
             int secondChoice;
             if(switchOrKeep == SWITCH) {
                 secondChoice = Arrays.stream(BOX_NUMBERS)

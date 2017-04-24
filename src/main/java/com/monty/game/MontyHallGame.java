@@ -1,6 +1,7 @@
 package com.monty.game;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -16,15 +17,16 @@ import java.util.Random;
         validateBoxArray(boxArray);
 
         //Sets the first chosen to -1
-        boxArray[firstChoice-1]= -1;
+        int [] copyArray = Arrays.copyOf(boxArray, boxArray.length);
+        copyArray[firstChoice-1]= -1;
 
-        int nFullBoxesInRest = getNumberOfFullBoxes(boxArray);
+        int nFullBoxesInRest = getNumberOfFullBoxes(copyArray);
 
         //both of the rest are empty, randomize one
         List<Integer> positions = new ArrayList<>();
         if(nFullBoxesInRest == 0) {
-            for(int i = 0; i < boxArray.length; i++) {
-                if(boxArray[i] == 0) {
+            for(int i = 0; i < copyArray.length; i++) {
+                if(copyArray[i] == 0) {
                     positions.add(i+1);
                 }
             }
