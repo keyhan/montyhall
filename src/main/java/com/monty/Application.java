@@ -17,6 +17,7 @@ public class Application {
 
     private final static Scanner SCANNER = new Scanner(System.in);
 
+    private static GameManager gameManager;
 
     private static void playBatch() {
         while (true) {
@@ -28,7 +29,7 @@ public class Application {
             System.out.print("Batch Size: ");
             int batchSize = SCANNER.nextInt();
 
-            int[] results = new GameManager().batchPlay(batchSize,switchOrKeep);
+            int[] results = gameManager.batchPlay(batchSize,switchOrKeep==1);
 
             System.out.println("Wins: " + results[0]);
             System.out.println("Losses: " + results[1]);
@@ -61,8 +62,6 @@ public class Application {
                     inputException = true;
                 }
             }
-
-            GameManager gameManager = new GameManager();
 
             Integer openedBox = gameManager.getOpenedBox(firstChoice);
 
@@ -100,7 +99,7 @@ public class Application {
 
     public static void main(String ... args) {
         System.out.println("######## Monty Hall Simulator #########");
-
+        gameManager = new GameManager();
         System.out.print("1) Interactive , 2) Batch Run: ");
 
         int runChoice = SCANNER.nextInt();
